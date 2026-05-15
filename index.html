@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WellbeingConnect Prototype</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #243b6b;
+      --primary-light: #e8eef8;
+      --background: #f5f7fb;
+      --text: #111827;
+      --muted: #667085;
+      --success: #16875a;
+      --warning: #e69a2e;
+      --danger: #d64545;
+      --card-border: #dde4ef;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .app-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .brand {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .card {
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: 0 4px 14px rgba(20, 36, 70, 0.06);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: #1b2f58;
+      border-color: #1b2f58;
+    }
+
+    .btn-outline-primary {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .status-badge {
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .status-high { background: var(--danger); }
+    .status-moderate { background: var(--warning); }
+    .status-ok { background: var(--success); }
+
+    .nav-pills .nav-link {
+      color: var(--muted);
+      border-radius: 14px;
+      font-weight: 600;
+    }
+
+    .nav-pills .nav-link.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .form-section-title {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .student-row {
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .student-row:hover,
+    .student-row:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(20, 36, 70, 0.12);
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .app-shell {
+        padding: 14px;
+      }
+
+      .desktop-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+      <div>
+        <div class="brand fs-4">WellbeingConnect</div>
+        <p class="text-muted mb-0">Personal Supervisor wellbeing support prototype</p>
+      </div>
+      <nav class="nav nav-pills" aria-label="Prototype navigation">
+        <button class="nav-link active" data-target="student-dashboard" type="button">Home</button>
+        <button class="nav-link" data-target="checkin" type="button">Check-in</button>
+        <button class="nav-link" data-target="supervisor-overview" type="button">Students</button>
+        <button class="nav-link" data-target="confirmation" type="button">Meetings</button>
+      </nav>
+    </header>
+
+    <section id="student-dashboard" class="screen active" aria-labelledby="student-dashboard-title">
+      <h1 id="student-dashboard-title" class="mb-2">Student dashboard</h1>
+      <p class="text-muted mb-4">Your weekly wellbeing update and support actions.</p>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="card p-4 h-100">
+            <h2 class="h4">Wellbeing check-in due</h2>
+            <p class="text-muted">Complete your weekly check-in so your Personal Supervisor can understand how you are progressing.</p>
+            <button class="btn btn-primary" data-target="checkin" type="button">Start check-in</button>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card p-4 h-100">
+            <h2 class="h4">Upcoming meeting</h2>
+            <p class="text-muted mb-0">No meeting currently booked.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-4 mt-4">
+        <h2 class="h5">Support note</h2>
+        <p class="text-muted mb-0">You can request a meeting at any time if you feel you need extra support.</p>
+      </div>
+    </section>
+
+    <section id="checkin" class="screen" aria-labelledby="checkin-title">
+      <h1 id="checkin-title" class="mb-2">Wellbeing check-in</h1>
+      <p class="text-muted mb-4">Tell us how you are feeling. This uses dummy data for the prototype.</p>
+
+      <form class="card p-4" id="checkin-form">
+        <div class="mb-4">
+          <label class="form-label form-section-title" for="mood">Mood today</label>
+          <select class="form-select" id="mood" required>
+            <option value="">Choose one</option>
+            <option>Low</option>
+            <option>Neutral</option>
+            <option>Good</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label form-section-title" for="workload">Workload level</label>
+          <select class="form-select" id="workload" required>
+            <option value="">Choose one</option>
+            <option>Manageable</option>
+            <option>High</option>
+            <option>Overwhelming</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label form-section-title" for="concerns">Any concerns?</label>
+          <textarea class="form-control" id="concerns" rows="4" placeholder="Write a short note if you want to explain more."></textarea>
+        </div>
+
+        <div class="form-check form-switch mb-4">
+          <input class="form-check-input" type="checkbox" role="switch" id="requestMeeting" />
+          <label class="form-check-label" for="requestMeeting">Request a meeting with my Personal Supervisor</label>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit check-in</button>
+      </form>
+    </section>
+
+    <section id="supervisor-overview" class="screen" aria-labelledby="overview-title">
+      <h1 id="overview-title" class="mb-2">Supervisor overview</h1>
+      <p class="text-muted mb-4">Students needing support based on latest wellbeing check-ins.</p>
+
+      <div class="card p-4 mb-4">
+        <h2 class="h4">3 students need attention</h2>
+        <p class="text-muted mb-0">Based on latest wellbeing check-in data.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-4">
+          <button class="card p-4 w-100 text-start student-row" data-target="student-detail" type="button">
+            <h3 class="h5">Student A</h3>
+            <span class="status-badge status-high">High concern</span>
+          </button>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 h-100">
+            <h3 class="h5">Student B</h3>
+            <span class="status-badge status-moderate">Moderate concern</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 h-100">
+            <h3 class="h5">Student C</h3>
+            <span class="status-badge status-ok">OK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-4 mt-4">
+        <h2 class="h5">Recent check-in trends</h2>
+        <p class="text-muted mb-0">Wellbeing concerns increased this week. Dummy data is used for prototype demonstration.</p>
+      </div>
+    </section>
+
+    <section id="student-detail" class="screen" aria-labelledby="student-detail-title">
+      <h1 id="student-detail-title" class="mb-2">Student detail</h1>
+      <p class="text-muted mb-4">Review latest wellbeing check-in and take support action.</p>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card p-4 h-100">
+            <h2 class="h4">Student A</h2>
+            <p class="text-muted">Wellbeing status</p>
+            <span class="status-badge status-high">High concern</span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card p-4 h-100">
+            <h2 class="h4">Latest check-in summary</h2>
+            <ul class="text-muted mb-0">
+              <li>Mood: Low</li>
+              <li>Workload: Overwhelming</li>
+              <li>Concern: struggling to keep up</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-4 mt-4">
+        <h2 class="h5">Support actions</h2>
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+          <button class="btn btn-primary" data-target="confirmation" type="button">Book meeting</button>
+          <button class="btn btn-outline-primary" id="send-message-button" type="button">Send message</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="confirmation" class="screen" aria-labelledby="confirmation-title">
+      <h1 id="confirmation-title" class="mb-2">Meeting confirmed</h1>
+      <p class="text-muted mb-4">Support action completed.</p>
+
+      <div class="card p-4 mb-4">
+        <h2 class="h4 text-success">Meeting booked</h2>
+        <p class="mb-1"><strong>Date:</strong> Friday</p>
+        <p class="mb-1"><strong>Time:</strong> 10:30 AM</p>
+        <p class="mb-0"><strong>With:</strong> Personal Supervisor</p>
+      </div>
+
+      <div class="card p-4">
+        <h2 class="h5">Next step</h2>
+        <p class="text-muted">Confirmation has been sent to the student. The student can view the meeting details from their dashboard.</p>
+        <button class="btn btn-primary" data-target="supervisor-overview" type="button">Return to overview</button>
+      </div>
+    </section>
+
+    <footer class="mt-5">
+      Prototype created using dummy data. No real student information is used.
+    </footer>
+  </main>
+
+  <script>
+  const screens = document.querySelectorAll('.screen');
+  const navButtons = document.querySelectorAll('[data-target]');
+
+  function showScreen(id) {
+    screens.forEach(screen => screen.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.nav-link').forEach(button => {
+      button.classList.toggle('active', button.dataset.target === id);
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => showScreen(button.dataset.target));
+  });
+
+  document.getElementById('checkin-form').addEventListener('submit', event => {
+    event.preventDefault();
+    showScreen('supervisor-overview');
+  });
+
+  const sendMessageButton = document.getElementById('send-message-button');
+
+  if (sendMessageButton) {
+    sendMessageButton.addEventListener('click', () => {
+      alert('Message sent to student.');
+    });
+  }
+</script>
+</body>
+</html>
